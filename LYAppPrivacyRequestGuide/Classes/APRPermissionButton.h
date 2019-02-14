@@ -27,7 +27,16 @@
 #import <UIKit/UIKit.h>
 
 
+typedef NS_ENUM(NSUInteger, APRPermissionButtonStatus) {
+	APRPermissionButtonStatusNormal = 0,
+	APRPermissionButtonStatusAuth = 1,
+	APRPermissionButtonStatusDeny = 2,
+};
 @interface APRPermissionButton : UIControl
 
+@property (nonatomic, weak) UILabel *lblHint;
+@property (nonatomic, weak) UIImageView *ivIcon;
+
+@property (nonatomic, assign) APRPermissionButtonStatus status;
 
 @end

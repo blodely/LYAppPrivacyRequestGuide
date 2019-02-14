@@ -26,6 +26,7 @@
 
 #import "LYAppPrivacyReqView.h"
 #import <Masonry/Masonry.h>
+#import <LYCategory/LYCategory.h>
 #import "APRPermissionButton.h"
 
 
@@ -71,8 +72,10 @@
 	
 	self.hidden = YES;
 	self.backgroundColor = [UIColor clearColor];
+	self.tintColor = [UIColor colorWithHex:@"#434c83" andAlpha:1.0];
 	
 	{
+		// MARK: CONTAINER
 		UIView *view = [[UIView alloc] init];
 		view.backgroundColor = [UIColor whiteColor];
 		[self addSubview:view];
@@ -84,6 +87,7 @@
 	}
 	
 	{
+		// MARK: SKIP BUTTON
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 		[vCont addSubview:button];
 		btnSkip = button;
@@ -108,30 +112,40 @@
 		APRPermissionButton *view = [[APRPermissionButton alloc] init];
 		[vCont addSubview:view];
 		cCamera = view;
+		
+		cCamera.lblHint.text = @"Camera permission.";
 	}
 	
 	{
 		APRPermissionButton *view = [[APRPermissionButton alloc] init];
 		[vCont addSubview:view];
 		cAlbum = view;
+		
+		cAlbum.lblHint.text = @"Album permission.";
 	}
 	
 	{
 		APRPermissionButton *view = [[APRPermissionButton alloc] init];
 		[vCont addSubview:view];
 		cMIC = view;
+		
+		cMIC.lblHint.text = @"Microphone permission.";
 	}
 	
 	{
 		APRPermissionButton *view = [[APRPermissionButton alloc] init];
 		[vCont addSubview:view];
 		cLocating = view;
+		
+		cLocating.lblHint.text = @"Location permission.";
 	}
 }
 
-// MARK: -
+// MARK: - METHOD
 
 - (void)show {
+	
+	[self reorderButtons];
 	
 	if ([self superview] != nil) {
 		self.hidden = NO;
@@ -140,7 +154,6 @@
 	
 	[[UIApplication sharedApplication].keyWindow addSubview:self];
 	self.hidden = NO;
-	
 }
 
 - (void)dismiss {
@@ -149,6 +162,50 @@
 	} completion:^(BOOL finished) {
 		[self removeFromSuperview];
 	}];
+}
+
+// MARK: PRIVATE METHOD
+
+- (void)reorderButtons {
+	CGFloat padding = 15.0f;
+	CGFloat height = 50.0f;
+	
+	[cCamera mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.top.equalTo(self).offset(HEIGHT * 0.25);
+		make.left.equalTo(self).offset(padding);
+		make.right.equalTo(self).offset(-padding);
+		if (self->_requestCamera) {
+			make.height.mas_equalTo(height);
+		} else {
+			make.height.mas_equalTo(0);
+		}
+	}];
+	[cAlbum mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.leading.trailing.equalTo(self->cCamera);
+		if (self->_requestCamera) {
+			make.top.equalTo(self->cCamera.mas_bottom).offset(padding);
+		} else {
+			make.top.equalTo(self->cCamera.mas_bottom).offset(0);
+		}
+		if (self->_requestAlbum) {
+			make.height.mas_equalTo(height);
+		} else {
+			make.height.mas_equalTo(0);
+		}
+	}];
+	[cMIC mas_makeConstraints:^(MASConstraintMaker *make) {
+		if (self->_requestAlbum) {
+			make.top.equalTo(self->cAlbum).offset(padding);
+		} else {
+			make.top.equalTo(self->cAlbum).offset(0);
+		}
+	}];
+}
+
+// MARK: - OVERWRITE
+
+- (void)setTintColor:(UIColor *)tintColor {
+	[super setTintColor:tintColor];
 }
 
 @end

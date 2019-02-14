@@ -46,6 +46,8 @@
 
 - (void)initial {
 	
+	_status = APRPermissionButtonStatusNormal;
+	
 	{
 		UIView *view = [[UIView alloc] init];
 		view.backgroundColor = [UIColor clearColor];
@@ -57,15 +59,48 @@
 			make.edges.equalTo(self);
 		}];
 	}
+	
+	{
+		UIImageView *view = [[UIImageView alloc] init];
+		[self addSubview:view];
+		_ivIcon = view;
+		
+		[view mas_makeConstraints:^(MASConstraintMaker *make) {
+			make.left.equalTo(self).offset(15);
+			make.centerY.equalTo(self);
+			make.width.height.mas_equalTo(22);
+		}];
+	}
+	
+	{
+		UILabel *view = [[UILabel alloc] init];
+		view.font = [UIFont systemFontOfSize:14];
+		[self addSubview:view];
+		_lblHint = view;
+		
+		[view mas_makeConstraints:^(MASConstraintMaker *make) {
+			make.leading.equalTo(self->_ivIcon.mas_trailing).offset(15);
+			make.top.equalTo(self).offset(4);
+			make.bottom.equalTo(self).offset(-4);
+			make.right.equalTo(self).offset(-4);
+		}];
+	}
 }
 
-- (void)setSelected:(BOOL)selected {
-	[super setSelected:selected];
+- (void)setStatus:(APRPermissionButtonStatus)status {
+	_status = status;
 	
-	if (selected) {
-		[vBorder borderWithWidth:2 andColor:self.tintColor];
-	} else {
-		[vBorder removeBorder];
+	switch (_status) {
+		default:
+		case APRPermissionButtonStatusNormal: {
+			[vBorder removeBorder];
+		} break;
+		case APRPermissionButtonStatusAuth: {
+			[vBorder borderWithWidth:2 andColor:[UIColor greenColor]];
+		} break;
+		case APRPermissionButtonStatusDeny: {
+			[vBorder borderWithWidth:2 andColor:[UIColor redColor]];
+		} break;
 	}
 }
 
