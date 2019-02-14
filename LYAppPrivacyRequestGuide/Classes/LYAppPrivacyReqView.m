@@ -29,7 +29,13 @@
 #import "APRPermissionButton.h"
 
 
-@interface LYAppPrivacyReqView () {}
+@interface LYAppPrivacyReqView () {
+	
+	__weak APRPermissionButton *cCamera;
+	__weak APRPermissionButton *cAlbum;
+	__weak APRPermissionButton *cMIC;
+	__weak APRPermissionButton *cLocating;
+}
 @end
 
 @implementation LYAppPrivacyReqView
@@ -99,7 +105,27 @@
 	}
 	
 	{
-		
+		APRPermissionButton *view = [[APRPermissionButton alloc] init];
+		[vCont addSubview:view];
+		cCamera = view;
+	}
+	
+	{
+		APRPermissionButton *view = [[APRPermissionButton alloc] init];
+		[vCont addSubview:view];
+		cAlbum = view;
+	}
+	
+	{
+		APRPermissionButton *view = [[APRPermissionButton alloc] init];
+		[vCont addSubview:view];
+		cMIC = view;
+	}
+	
+	{
+		APRPermissionButton *view = [[APRPermissionButton alloc] init];
+		[vCont addSubview:view];
+		cLocating = view;
 	}
 }
 

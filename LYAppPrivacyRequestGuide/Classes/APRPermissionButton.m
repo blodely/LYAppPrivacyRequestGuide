@@ -25,7 +25,48 @@
 //
 
 #import "APRPermissionButton.h"
+#import <Masonry/Masonry.h>
+#import <LYCategory/LYCategory.h>
+
+
+@interface APRPermissionButton () {
+	
+	__weak UIView *vBorder;
+}
+@end
 
 @implementation APRPermissionButton
+
+- (instancetype)initWithFrame:(CGRect)frame {
+	if (self = [super initWithFrame:frame]) {
+		[self initial];
+	}
+	return self;
+}
+
+- (void)initial {
+	
+	{
+		UIView *view = [[UIView alloc] init];
+		view.backgroundColor = [UIColor clearColor];
+		view.userInteractionEnabled = NO;
+		[self addSubview:view];
+		vBorder = view;
+		
+		[view mas_makeConstraints:^(MASConstraintMaker *make) {
+			make.edges.equalTo(self);
+		}];
+	}
+}
+
+- (void)setSelected:(BOOL)selected {
+	[super setSelected:selected];
+	
+	if (selected) {
+		[vBorder borderWithWidth:2 andColor:self.tintColor];
+	} else {
+		[vBorder removeBorder];
+	}
+}
 
 @end

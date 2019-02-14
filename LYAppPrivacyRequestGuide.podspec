@@ -33,6 +33,7 @@ Better UX for requesting auths.
   # s.frameworks = 'UIKit', 'MapKit'
 	s.frameworks = 'UIKit'
 	
+	s.dependency 'LYCategory'
 	s.dependency 'Masonry'
 
 end
