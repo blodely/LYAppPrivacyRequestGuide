@@ -25,23 +25,104 @@
 //
 
 #import "LYAppPrivacyReqView.h"
+#import <Masonry/Masonry.h>
+#import "APRPermissionButton.h"
+
+
+@interface LYAppPrivacyReqView () {}
+@end
 
 @implementation LYAppPrivacyReqView
 
-// MARK: -
+// MARK: - ACTION
+
+- (void)skipButtonPressed:(id)sender {
+	[self dismiss];
+}
+
+// MARK: - INIT
 
 + (instancetype)view {
-	return [[LYAppPrivacyReqView alloc] init];
+	return [[LYAppPrivacyReqView alloc] initWithFrame:CGRectZero];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+	frame = [UIScreen mainScreen].bounds;
+	if (self = [super initWithFrame:frame]) {
+		[self initial];
+	}
+	return self;
+}
+
+- (instancetype)init {
+	if (self = [super initWithFrame:[UIScreen mainScreen].bounds]) {
+		[self initial];
+	}
+	return self;
+}
+
+- (void)initial {
+	
+	self.hidden = YES;
+	self.backgroundColor = [UIColor clearColor];
+	
+	{
+		UIView *view = [[UIView alloc] init];
+		view.backgroundColor = [UIColor whiteColor];
+		[self addSubview:view];
+		vCont = view;
+		
+		[view mas_makeConstraints:^(MASConstraintMaker *make) {
+			make.edges.equalTo(self);
+		}];
+	}
+	
+	{
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+		[vCont addSubview:button];
+		btnSkip = button;
+		
+		[button setTitle:@"Skip" forState:UIControlStateNormal];
+		[button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+		button.titleLabel.font = [UIFont systemFontOfSize:14];
+		
+		[button mas_makeConstraints:^(MASConstraintMaker *make) {
+			if (@available(iOS 11.0, *)) {
+				make.top.equalTo(self.mas_safeAreaLayoutGuideTop).offset(6);
+			} else {
+				make.top.equalTo(self).offset(6);
+			}
+			make.right.equalTo(self).offset(-15);
+		}];
+		
+		[btnSkip addTarget:self action:@selector(skipButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+	}
+	
+	{
+		
+	}
 }
 
 // MARK: -
 
 - (void)show {
 	
+	if ([self superview] != nil) {
+		self.hidden = NO;
+		return;
+	}
+	
+	[[UIApplication sharedApplication].keyWindow addSubview:self];
+	self.hidden = NO;
+	
 }
 
 - (void)dismiss {
-	
+	[UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+		self.alpha = 0;
+	} completion:^(BOOL finished) {
+		[self removeFromSuperview];
+	}];
 }
 
 @end

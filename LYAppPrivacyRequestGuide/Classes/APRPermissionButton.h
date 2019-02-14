@@ -1,5 +1,5 @@
 //
-//	LYAppPrivacyReqView.h
+//	APRPermissionButton.h
 //	LYAppPrivacyRequestGuide
 //
 //	CREATED BY LUO YU(blodely) ON 2019-02-14.
@@ -27,21 +27,6 @@
 #import <UIKit/UIKit.h>
 
 
-@interface LYAppPrivacyReqView : UIView {
-	
-	__weak UIView *vCont;
-	__weak UIButton *btnSkip;
-}
-
-@property (nonatomic, assign) BOOL requestCamera;
-@property (nonatomic, assign) BOOL requestAlbum;
-@property (nonatomic, assign) BOOL requestMIC;
-@property (nonatomic, assign) BOOL requestLocating;
-
-+ (instancetype)view;
-
-- (void)show;
-
-- (void)dismiss;
+@interface APRPermissionButton : UIControl
 
 @end

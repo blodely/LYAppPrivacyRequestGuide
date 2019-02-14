@@ -38,6 +38,11 @@
 
 - (void)showRequestButtonPressed:(id)sender {
 	
+	LYAppPrivacyReqView *reqv = [LYAppPrivacyReqView view];
+	reqv.requestCamera = YES;
+	reqv.requestAlbum = YES;
+	reqv.requestMIC = YES;
+	[reqv show];
 }
 
 // MARK: - INIT
