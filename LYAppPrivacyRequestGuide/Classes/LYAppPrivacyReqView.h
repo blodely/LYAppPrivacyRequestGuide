@@ -1,5 +1,5 @@
 //
-//	LYAppPrivacyRequestGuide.h
+//	LYAppPrivacyReqView.h
 //	LYAppPrivacyRequestGuide
 //
 //	CREATED BY LUO YU(blodely) ON 2019-02-14.
@@ -24,11 +24,20 @@
 //	THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 
-@interface LYAppPrivacyRequestGuide : NSObject
+@interface LYAppPrivacyReqView : UIView
+
+@property (nonatomic, assign) BOOL requestCamera;
+@property (nonatomic, assign) BOOL requestAlbum;
+@property (nonatomic, assign) BOOL requestMIC;
+@property (nonatomic, assign) BOOL requestLocating;
+
++ (instancetype)view;
+
+- (void)show;
+
+- (void)dismiss;
 
 @end
-
-#import <LYAppPrivacyRequestGuide/LYAppPrivacyReqView.h>

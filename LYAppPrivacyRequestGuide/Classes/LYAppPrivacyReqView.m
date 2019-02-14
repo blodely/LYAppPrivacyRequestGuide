@@ -1,5 +1,5 @@
 //
-//	LYAppPrivacyRequestGuide.h
+//	LYAppPrivacyReqView.m
 //	LYAppPrivacyRequestGuide
 //
 //	CREATED BY LUO YU(blodely) ON 2019-02-14.
@@ -24,11 +24,24 @@
 //	THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "LYAppPrivacyReqView.h"
 
+@implementation LYAppPrivacyReqView
 
-@interface LYAppPrivacyRequestGuide : NSObject
+// MARK: -
+
++ (instancetype)view {
+	return [[LYAppPrivacyReqView alloc] init];
+}
+
+// MARK: -
+
+- (void)show {
+	
+}
+
+- (void)dismiss {
+	
+}
 
 @end
-
-#import <LYAppPrivacyRequestGuide/LYAppPrivacyReqView.h>
